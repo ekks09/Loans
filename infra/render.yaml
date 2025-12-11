@@ -14,6 +14,8 @@ services:
       # Use the module and app name that matches your code. Example: prod_app:app
       exec gunicorn -k uvicorn.workers.UvicornWorker prod_app:app -b 0.0.0.0:$PORT -w 4 --log-level info
     envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.9
       - key: DATABASE_URL
         sync: false
       - key: SUPABASE_URL
@@ -28,8 +30,6 @@ services:
         sync: false
       - key: PAYSTACK_WEBHOOK_SECRET
         sync: false
-      - key: PYTHON_VERSION
-        value: 3.11.0
       - key: PORT
         value: 10000
       - key: RENDER
