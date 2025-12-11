@@ -5,20 +5,28 @@ services:
     region: oregon
     plan: free
     buildCommand: |
-      # make directories for writable cargo/rustup/cache and upgrade pip/tools
+      # ensure writable cargo/rustup and upgrade pip/tools to prefer wheels
       mkdir -p /tmp/cargo /tmp/rustup /tmp/.cache/pip
       pip install --upgrade pip setuptools wheel
       pip install -r requirements.txt
     startCommand: |
-      python prod_app.py
+      # Use gunicorn + uvicorn workers for production FastAPI/ASGI apps
+      # Use the module and app name that matches your code. Example: prod_app:app
+      exec gunicorn -k uvicorn.workers.UvicornWorker prod_app:app -b 0.0.0.0:$PORT -w 4 --log-level info
     envVars:
       - key: DATABASE_URL
+        sync: false
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_SERVICE_ROLE_KEY
         sync: false
       - key: SECRET_KEY
         generateValue: true
       - key: PAYSTACK_SECRET_KEY
         sync: false
       - key: PAYSTACK_PUBLIC_KEY
+        sync: false
+      - key: PAYSTACK_WEBHOOK_SECRET
         sync: false
       - key: PYTHON_VERSION
         value: 3.11.0
@@ -34,3 +42,24 @@ services:
         value: /tmp/.cache
     autoDeploy: true
     healthCheckPath: /health
+
+  - type: static
+    name: microloan-frontend
+    region: oregon
+    plan: free
+    # Adjust buildCommand and publishPath to match your frontend (npm, yarn, build dir)
+    buildCommand: |
+      if [ -f package-lock.json ]; then
+        npm ci
+      else
+        npm install
+      fi
+      npm run build
+    startCommand: |
+      # Static services on Render only need a publish path; startCommand is optional
+      echo "Static site published"
+    staticPublishPath: build
+    envVars:
+      - key: NODE_ENV
+        value: production
+    autoDeploy: true
