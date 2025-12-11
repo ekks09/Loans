@@ -22,9 +22,17 @@ async def register(user_data: UserRegister, db: Session = Depends(get_db)):
             detail="Phone number already registered"
         )
     
+    existing_id = db.query(User).filter(User.id_number == user_data.id_number).first()
+    if existing_id:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="ID number already registered"
+        )
+    
     hashed_password = get_password_hash(user_data.password)
     new_user = User(
         phone=user_data.phone,
+        id_number=user_data.id_number,
         password_hash=hashed_password,
         loan_limit=5000
     )
@@ -37,7 +45,8 @@ async def register(user_data: UserRegister, db: Session = Depends(get_db)):
     
     return TokenResponse(
         access_token=access_token,
-        refresh_token=refresh_token
+        refresh_token=refresh_token,
+        user=UserResponse.from_orm(new_user)
     )
 
 @router.post("/login", response_model=TokenResponse)
@@ -54,7 +63,8 @@ async def login(user_data: UserLogin, db: Session = Depends(get_db)):
     
     return TokenResponse(
         access_token=access_token,
-        refresh_token=refresh_token
+        refresh_token=refresh_token,
+        user=UserResponse.from_orm(user)
     )
 
 @router.post("/refresh", response_model=TokenResponse)

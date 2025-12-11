@@ -1,9 +1,8 @@
 import os
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app.routers import auth, loan, payments
-
-app = FastAPI(
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
     title="MicroLoan API",
     description="A microloan web application API with Paystack M-Pesa integration",
     version="1.0.0"

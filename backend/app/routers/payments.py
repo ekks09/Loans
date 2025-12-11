@@ -41,11 +41,13 @@ async def initialize_payment(
     reference = f"LOAN_{loan.id}_{uuid.uuid4().hex[:8].upper()}"
     email = f"{current_user.phone}@microloan.app"
     
+    # Initialize payment with M-Pesa support
     result = await paystack_service.initialize_transaction(
         email=email,
         amount=loan.total,
         reference=reference,
-        callback_url=request.callback_url
+        callback_url=request.callback_url,
+        phone=current_user.phone
     )
     
     if not result.get("success"):
@@ -59,7 +61,11 @@ async def initialize_payment(
         reference=reference,
         amount=loan.total,
         status="pending",
-        transaction_metadata=json.dumps({"loan_id": loan.id, "user_phone": current_user.phone})
+        transaction_metadata=json.dumps({
+            "loan_id": loan.id,
+            "user_phone": current_user.phone,
+            "payment_method": "mpesa"
+        })
     )
     db.add(new_transaction)
     db.commit()

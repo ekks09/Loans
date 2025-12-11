@@ -62,6 +62,12 @@
                     <input type="tel" id="signup-phone" placeholder="0712345678" required>
                     <span class="input-highlight"></span>
                 </div>
+
+                <div class="input-group">
+                    <label for="signup-id">ID No.</label>
+                    <input type="text" id="signup-id" placeholder="e.g., 12345678" required>
+                    <span class="input-highlight"></span>
+                </div>
                 
                 <div class="input-group">
                     <label for="signup-password">Password</label>
@@ -127,6 +133,7 @@
             signupForm.addEventListener('submit', async function(e) {
                 e.preventDefault();
                 const phone = document.getElementById('signup-phone').value;
+                const idNumber = document.getElementById('signup-id').value;
                 const password = document.getElementById('signup-password').value;
                 const confirm = document.getElementById('signup-confirm').value;
                 const errorDiv = document.getElementById('signup-error');
@@ -138,7 +145,7 @@
                 }
                 
                 try {
-                    const result = await API.register(phone, password);
+                    const result = await API.register(phone, idNumber, password);
                     if (result.access_token) {
                         localStorage.setItem('access_token', result.access_token);
                         localStorage.setItem('refresh_token', result.refresh_token);

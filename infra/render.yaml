@@ -5,12 +5,9 @@ services:
     region: oregon
     plan: free
     buildCommand: |
-      cd backend
       pip install -r requirements.txt
     startCommand: |
-      cd backend
-      chmod +x render_start.sh
-      ./render_start.sh
+      python prod_app.py
     envVars:
       - key: DATABASE_URL
         sync: false
@@ -18,9 +15,13 @@ services:
         generateValue: true
       - key: PAYSTACK_SECRET_KEY
         sync: false
+      - key: PAYSTACK_PUBLIC_KEY
+        sync: false
       - key: PYTHON_VERSION
         value: 3.11.0
       - key: PORT
         value: 10000
+      - key: RENDER
+        value: true
     autoDeploy: true
     healthCheckPath: /health
