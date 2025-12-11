@@ -10,6 +10,6 @@ passlib[bcrypt]==1.7.4
 python-multipart==0.0.6
 httpx==0.25.2
 pydantic==2.5.2
-pydantic-core==2.41.5
-pydantic-settings==2.1.0
+pydantic-core
+pydantic-settings
 python-dotenv==1.0.0
