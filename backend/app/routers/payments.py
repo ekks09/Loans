@@ -59,7 +59,7 @@ async def initialize_payment(
         reference=reference,
         amount=loan.total,
         status="pending",
-        metadata=json.dumps({"loan_id": loan.id, "user_phone": current_user.phone})
+        transaction_metadata=json.dumps({"loan_id": loan.id, "user_phone": current_user.phone})
     )
     db.add(new_transaction)
     db.commit()

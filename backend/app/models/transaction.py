@@ -10,6 +10,6 @@ class Transaction(Base):
     reference = Column(String(100), unique=True, nullable=False)
     amount = Column(Integer, nullable=False)
     status = Column(String(20), default="pending")
-    metadata = Column(String(1000), nullable=True)
+    transaction_metadata = Column(String(1000), nullable=True)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     updated_at = Column(DateTime(timezone=True), onupdate=func.now())

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - MicroLoan</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/glass.css">
+    <link rel="stylesheet" href="styles/animations.css">
+</head>
+<body>
+    <div class="gradient-bg"></div>
+    <div class="floating-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+    </div>
+
+    <nav class="glass-nav">
+        <div class="nav-brand">
+            <a href="index.html" class="brand-link">
+                <span class="logo">ML</span>
+                <span class="brand-name">MicroLoan</span>
+            </a>
+        </div>
+    </nav>
+
+    <main class="auth-container">
+        <div class="auth-card glass-card float-animation">
+            <div class="auth-tabs">
+                <button class="tab-btn active" data-tab="login">Login</button>
+                <button class="tab-btn" data-tab="signup">Sign Up</button>
+            </div>
+
+            <form id="login-form" class="auth-form active">
+                <h2>Welcome Back</h2>
+                <p class="form-subtitle">Enter your credentials to access your account</p>
+                
+                <div class="input-group">
+                    <label for="login-phone">Phone Number</label>
+                    <input type="tel" id="login-phone" placeholder="0712345678" required>
+                    <span class="input-highlight"></span>
+                </div>
+                
+                <div class="input-group">
+                    <label for="login-password">Password</label>
+                    <input type="password" id="login-password" placeholder="Enter your password" required>
+                    <span class="input-highlight"></span>
+                </div>
+
+                <div class="error-message" id="login-error"></div>
+                
+                <button type="submit" class="btn btn-primary btn-full">Login</button>
+            </form>
+
+            <form id="signup-form" class="auth-form">
+                <h2>Create Account</h2>
+                <p class="form-subtitle">Start your loan journey today</p>
+                
+                <div class="input-group">
+                    <label for="signup-phone">Phone Number</label>
+                    <input type="tel" id="signup-phone" placeholder="0712345678" required>
+                    <span class="input-highlight"></span>
+                </div>
+                
+                <div class="input-group">
+                    <label for="signup-password">Password</label>
+                    <input type="password" id="signup-password" placeholder="Create a password" required>
+                    <span class="input-highlight"></span>
+                </div>
+
+                <div class="input-group">
+                    <label for="signup-confirm">Confirm Password</label>
+                    <input type="password" id="signup-confirm" placeholder="Confirm your password" required>
+                    <span class="input-highlight"></span>
+                </div>
+
+                <div class="error-message" id="signup-error"></div>
+                
+                <button type="submit" class="btn btn-primary btn-full">Create Account</button>
+            </form>
+        </div>
+    </main>
+
+    <script src="scripts/api.js"></script>
+    <script src="scripts/ui.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabBtns = document.querySelectorAll('.tab-btn');
+            const loginForm = document.getElementById('login-form');
+            const signupForm = document.getElementById('signup-form');
+
+            tabBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    tabBtns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    if (this.dataset.tab === 'login') {
+                        loginForm.classList.add('active');
+                        signupForm.classList.remove('active');
+                    } else {
+                        signupForm.classList.add('active');
+                        loginForm.classList.remove('active');
+                    }
+                });
+            });
+
+            loginForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                const phone = document.getElementById('login-phone').value;
+                const password = document.getElementById('login-password').value;
+                const errorDiv = document.getElementById('login-error');
+                
+                try {
+                    const result = await API.login(phone, password);
+                    if (result.access_token) {
+                        localStorage.setItem('access_token', result.access_token);
+                        localStorage.setItem('refresh_token', result.refresh_token);
+                        window.location.href = 'dashboard.html';
+                    }
+                } catch (error) {
+                    errorDiv.textContent = error.message || 'Login failed. Please try again.';
+                    errorDiv.style.display = 'block';
+                }
+            });
+
+            signupForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                const phone = document.getElementById('signup-phone').value;
+                const password = document.getElementById('signup-password').value;
+                const confirm = document.getElementById('signup-confirm').value;
+                const errorDiv = document.getElementById('signup-error');
+                
+                if (password !== confirm) {
+                    errorDiv.textContent = 'Passwords do not match';
+                    errorDiv.style.display = 'block';
+                    return;
+                }
+                
+                try {
+                    const result = await API.register(phone, password);
+                    if (result.access_token) {
+                        localStorage.setItem('access_token', result.access_token);
+                        localStorage.setItem('refresh_token', result.refresh_token);
+                        window.location.href = 'dashboard.html';
+                    }
+                } catch (error) {
+                    errorDiv.textContent = error.message || 'Registration failed. Please try again.';
+                    errorDiv.style.display = 'block';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

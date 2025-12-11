@@ -49,7 +49,7 @@ def upgrade() -> None:
         sa.Column('reference', sa.String(length=100), nullable=False),
         sa.Column('amount', sa.Integer(), nullable=False),
         sa.Column('status', sa.String(length=20), nullable=True),
-        sa.Column('metadata', sa.String(length=1000), nullable=True),
+        sa.Column('transaction_metadata', sa.String(length=1000), nullable=True),
         sa.Column('created_at', sa.DateTime(timezone=True), server_default=sa.text('now()'), nullable=True),
         sa.Column('updated_at', sa.DateTime(timezone=True), nullable=True),
         sa.ForeignKeyConstraint(['loan_id'], ['loans.id'], ),
