@@ -1,0 +1,317 @@
+ROLE:
+Act as a deterministic code generator.
+Follow every instruction exactly.
+Never invent files.
+Never skip files.
+Never output placeholders.
+Everything must be fully implemented.
+
+1. PROJECT SCOPE (STRICT AND UNCHANGING)
+
+Generate a complete, production-ready, functional microloan web application using:
+
+Backend: FastAPI (Python)
+
+Frontend: HTML + CSS + Vanilla JS
+
+Database: Supabase (Postgres)
+
+Payments: Paystack (M-Pesa Till already connected)
+
+Hosting: Render.com
+
+UI Style: Animated glassmorphism
+
+The output must include every file listed below, with full working code.
+
+2. FIXED FOLDER STRUCTURE (NO ADDITIONS OR REMOVALS ALLOWED)
+project/
+├── backend/
+│   ├── app/
+│   │   ├── main.py
+│   │   ├── routers/
+│   │   │   ├── auth.py
+│   │   │   ├── loan.py
+│   │   │   ├── payments.py
+│   │   ├── models/
+│   │   │   ├── user.py
+│   │   │   ├── loan.py
+│   │   │   ├── transaction.py
+│   │   ├── schemas/
+│   │   │   ├── user.py
+│   │   │   ├── loan.py
+│   │   │   ├── payment.py
+│   │   ├── services/
+│   │   │   └── paystack_service.py
+│   │   ├── utils/
+│   │       ├── auth.py
+│   │       ├── database.py
+│   ├── alembic/
+│   │   ├── versions/
+│   ├── alembic.ini
+│   ├── requirements.txt
+│   ├── render_start.sh
+│   ├── README.md
+├── frontend/
+│   ├── index.html
+│   ├── login.html
+│   ├── dashboard.html
+│   ├── loan_apply.html
+│   ├── styles/
+│   │   ├── main.css
+│   │   ├── glass.css
+│   │   ├── animations.css
+│   ├── scripts/
+│   │   ├── api.js
+│   │   ├── ui.js
+├── infra/
+│   └── render.yaml
+├── .env.example
+└── postman_collection.json
+
+
+The model must produce full code for every single file above.
+
+3. BACKEND REQUIREMENTS (TIGHTENED RULESET)
+Authentication
+
+JWT access + refresh tokens
+
+Phone + password login
+
+Registration
+
+Password hashing
+
+Token refresh endpoint
+
+Optional OTP endpoint
+
+Loan Engine (Zero Ambiguity Version)
+
+A loan preview must return EXACTLY:
+
+principal
+
+fee
+
+total_repayable
+
+Processing fee rules (mandatory):
+
+Principal	Fee
+3000	         200
+5000	         350
+6000–8000	 460
+10000	         1000
+20000	         2000
+30000	         3000
+40000	         4000
+50000	         5000
+60000	         6000
+
+If principal < 3000 or > 60000 → reject with error.
+
+Loan limits:
+
+Start at 5,000
+
+Increase by 2,000 after each successful repayment
+
+Max 60,000
+
+Paystack Integration
+
+Endpoints must include:
+
+Create charge
+
+Redirect URL support
+
+Webhook verification
+
+Store transaction metadata
+
+Mark loan as repaid
+
+Paystack service must:
+
+Use secret key from environment
+
+Return structured JSON only
+
+Handle errors gracefully
+
+Models
+
+User (phone, password, loan_limit)
+
+Loan (amount, fee, total, status)
+
+Transaction (reference, amount, status)
+
+Database Layer
+
+SQLAlchemy ORM
+
+Supabase database URL from env
+
+Alembic migrations auto-generated
+
+4. FRONTEND REQUIREMENTS (TIGHTENED)
+HTML Pages
+
+index.html
+
+Glassmorphic hero
+
+Animated gradient background
+
+login.html
+
+Login + signup toggle
+
+Animated input focus
+
+dashboard.html
+
+Loan history table
+
+Repayment status indicators
+
+Glass cards with floating animation
+
+loan_apply.html
+
+Slider input
+
+Live preview card
+
+Glass popup receipt
+
+CSS Requirements
+
+No frameworks
+
+Use backdrop-filter: blur
+
+Use floating animations
+
+Use neon glow edges
+
+Use gradient background
+
+Smooth transitions everywhere
+
+JS Requirements
+
+api.js → API wrapper (fetch, auth handling, error handling)
+
+ui.js → animation triggers, form handling, slider updates
+
+Token must be stored in localStorage
+
+On page load, redirect to login if not authenticated
+
+Live loan preview updates with no backend call
+
+5. RENDER DEPLOYMENT (TIGHTENED)
+
+render.yaml must include:
+
+Service type: web
+
+Python build command
+
+Start command: ./render_start.sh
+
+Environment variables
+
+Auto-redeploy enabled
+
+render_start.sh must:
+
+Run migrations
+
+Start FastAPI with Uvicorn
+
+6. README REQUIREMENTS (TIGHTENED)
+
+README.md must contain:
+
+Sections:
+1. Project Overview
+2. Backend Setup
+3. Frontend Setup
+4. Environment Variables Table
+5. Database Setup + Alembic Commands
+6. Paystack Setup
+7. Render Deployment Steps
+8. API Endpoints Table
+9. Common Errors + Fixes
+
+Must be clear, step-by-step, and beginner-friendly.
+
+7. OUTPUT FORMAT (STRICTEST RULESET)
+
+The model must output in this exact order:
+
+Folder structure
+
+Backend file contents
+
+Frontend file contents
+
+Infra files
+
+.env.example
+
+postman_collection.json
+
+README.md
+
+Rules:
+
+Every file must use a fenced code block:
+
+```python  
+```html  
+```yaml  
+etc.  
+
+
+No explanations between file outputs
+
+No placeholders (“add more here”)
+
+No shortening (“...”)
+
+No comments telling user to fill later
+
+Everything fully implemented
+
+8. MODEL EXECUTION RULES (MAXIMUM STRICTNESS)
+
+The model must:
+
+Not invent new files
+
+Not rename any file
+
+Not skip any file
+
+Not reference ungenerated components
+
+Not leave functions empty
+
+Not produce pseudo-code
+
+Generate the entire project in one response
+
+Keep frontend animations lightweight for speed
+
+Keep backend code simple and minimal
+
+Produce SQLAlchemy + Alembic code that runs without modification
+
+Produce identical folder structure to the one above
