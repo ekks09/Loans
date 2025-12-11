@@ -5,6 +5,9 @@ services:
     region: oregon
     plan: free
     buildCommand: |
+      # make directories for writable cargo/rustup/cache and upgrade pip/tools
+      mkdir -p /tmp/cargo /tmp/rustup /tmp/.cache/pip
+      pip install --upgrade pip setuptools wheel
       pip install -r requirements.txt
     startCommand: |
       python prod_app.py
@@ -23,5 +26,11 @@ services:
         value: 10000
       - key: RENDER
         value: true
+      - key: CARGO_HOME
+        value: /tmp/cargo
+      - key: RUSTUP_HOME
+        value: /tmp/rustup
+      - key: XDG_CACHE_HOME
+        value: /tmp/.cache
     autoDeploy: true
     healthCheckPath: /health
