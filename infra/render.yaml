@@ -2,7 +2,7 @@ services:
   - type: web
     name: microloan-api
     runtime: python
-    region: oregon
+    region: Ohio
     plan: free
     buildCommand: |
       # ensure writable cargo/rustup and upgrade pip/tools to prefer wheels
