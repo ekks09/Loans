@@ -22,133 +22,132 @@
             <span class="brand-name">MicroLoan</span>
         </div>
         <div class="nav-links">
-            <a href="dashboard.html" class="nav-link">Dashboard</a>
+            <a href="dashboard.html" class="nav-link">← Back to Dashboard</a>
             <button id="logout-btn" class="btn btn-secondary">Logout</button>
         </div>
     </nav>
 
-    <main class="apply-container">
-        <div class="apply-header">
-            <h1>Apply for a Loan</h1>
-            <p>Your current limit: <span id="user-limit" class="highlight">KES 5,000</span></p>
-        </div>
+    <main class="loan-apply-container">
+        <div class="loan-apply-card glass-card">
+            <div class="apply-header">
+                <h1>Apply for a Loan</h1>
+                <p>Get instant access to funds up to your limit</p>
+            </div>
 
-        <div class="apply-content">
-            <div class="loan-calculator glass-card float-animation">
-                <h2>Select Loan Amount</h2>
-                
-                <div class="slider-container">
-                    <input type="range" id="loan-slider" min="3000" max="60000" step="1000" value="5000">
-                    <div class="slider-labels">
-                        <span>KES 3,000</span>
-                        <span>KES 60,000</span>
-                    </div>
+            <div class="loan-limits glass-card">
+                <div class="limit-info">
+                    <span class="limit-label">Your Current Limit</span>
+                    <span class="limit-value" id="user-limit">KES 5,000</span>
                 </div>
-
-                <div class="amount-display">
-                    <span class="amount-label">Loan Amount</span>
-                    <span class="amount-value" id="display-amount">KES 5,000</span>
-                </div>
-
-                <div class="preset-amounts">
-                    <button class="preset-btn" data-amount="3000">3K</button>
-                    <button class="preset-btn" data-amount="5000">5K</button>
-                    <button class="preset-btn" data-amount="10000">10K</button>
-                    <button class="preset-btn" data-amount="20000">20K</button>
-                    <button class="preset-btn" data-amount="30000">30K</button>
-                    <button class="preset-btn" data-amount="50000">50K</button>
+                <div class="limit-info">
+                    <span class="limit-label">Max Loan Amount</span>
+                    <span class="limit-value" id="max-amount">KES 5,000</span>
                 </div>
             </div>
 
-            <div class="loan-preview glass-card float-animation-delayed">
-                <h2>Loan Preview</h2>
-                
-                <div class="preview-details">
+            <form id="loan-form">
+                <div class="form-group">
+                    <label for="loan-amount">Loan Amount (KES)</label>
+                    <input 
+                        type="number" 
+                        id="loan-amount" 
+                        name="amount" 
+                        min="3000" 
+                        max="60000" 
+                        step="1000"
+                        placeholder="Enter amount (3,000 - 60,000)"
+                        required
+                    >
+                    <small>Minimum: KES 3,000 | Maximum: KES 60,000</small>
+                </div>
+
+                <div class="loan-preview glass-card" id="loan-preview" style="display: none;">
+                    <h3>Loan Preview</h3>
                     <div class="preview-row">
-                        <span class="preview-label">Principal</span>
-                        <span class="preview-value" id="preview-principal">KES 5,000</span>
+                        <span class="preview-label">Principal Amount</span>
+                        <span class="preview-value" id="preview-principal">KES 0</span>
                     </div>
                     <div class="preview-row">
-                        <span class="preview-label">Processing Fee</span>
-                        <span class="preview-value" id="preview-fee">KES 350</span>
+                        <span class="preview-label">Service Fee</span>
+                        <span class="preview-value" id="preview-fee">KES 0</span>
                     </div>
-                    <div class="preview-row total">
+                    <div class="preview-row highlight">
                         <span class="preview-label">Total Repayable</span>
-                        <span class="preview-value" id="preview-total">KES 5,350</span>
+                        <span class="preview-value" id="preview-total">KES 0</span>
+                    </div>
+                    <div class="preview-row">
+                        <span class="preview-label">Loan Duration</span>
+                        <span class="preview-value" id="preview-duration">30 Days</span>
                     </div>
                 </div>
 
-                <div class="error-message" id="apply-error"></div>
+                <div id="form-error" class="error-message" style="display: none;"></div>
+                <div id="form-success" class="success-message" style="display: none;"></div>
 
-                <button id="apply-btn" class="btn btn-primary btn-full pulse-animation">Apply Now</button>
+                <button type="submit" class="btn btn-primary btn-full">Apply for Loan</button>
+                <a href="dashboard.html" class="btn btn-secondary btn-full">Cancel</a>
+            </form>
+
+            <div class="loan-info">
+                <h3>Fee Structure</h3>
+                <div class="fee-table">
+                    <div class="fee-row">
+                        <span class="fee-amount">3,000 - 5,000 KES</span>
+                        <span class="fee-percent">200 - 350 KES</span>
+                    </div>
+                    <div class="fee-row">
+                        <span class="fee-amount">6,000 - 8,000 KES</span>
+                        <span class="fee-percent">460 KES</span>
+                    </div>
+                    <div class="fee-row">
+                        <span class="fee-amount">10,000 KES</span>
+                        <span class="fee-percent">1,000 KES</span>
+                    </div>
+                    <div class="fee-row">
+                        <span class="fee-amount">20,000 KES</span>
+                        <span class="fee-percent">2,000 KES</span>
+                    </div>
+                    <div class="fee-row">
+                        <span class="fee-amount">30,000 KES</span>
+                        <span class="fee-percent">3,000 KES</span>
+                    </div>
+                    <div class="fee-row">
+                        <span class="fee-amount">40,000 KES</span>
+                        <span class="fee-percent">4,000 KES</span>
+                    </div>
+                    <div class="fee-row">
+                        <span class="fee-amount">50,000 KES</span>
+                        <span class="fee-percent">5,000 KES</span>
+                    </div>
+                    <div class="fee-row">
+                        <span class="fee-amount">60,000 KES</span>
+                        <span class="fee-percent">6,000 KES</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="loan-terms">
+                <h3>Terms & Conditions</h3>
+                <ul>
+                    <li>Loan duration is fixed at 30 days</li>
+                    <li>You must repay the total amount (principal + fee) within 30 days</li>
+                    <li>Late repayment may affect your future loan limits</li>
+                    <li>Your loan limit increases by KES 2,000 after successful repayment (up to KES 60,000 maximum)</li>
+                    <li>Approved loans appear instantly in your dashboard</li>
+                </ul>
             </div>
         </div>
     </main>
 
-    <div id="receipt-modal" class="modal">
-        <div class="modal-content glass-card receipt-card">
-            <div class="receipt-header">
-                <div class="receipt-icon">&#9989;</div>
-                <h2>Loan Approved!</h2>
-            </div>
-            <div class="receipt-body">
-                <div class="receipt-row">
-                    <span>Loan ID</span>
-                    <span id="receipt-id">#1</span>
-                </div>
-                <div class="receipt-row">
-                    <span>Principal</span>
-                    <span id="receipt-principal">KES 5,000</span>
-                </div>
-                <div class="receipt-row">
-                    <span>Processing Fee</span>
-                    <span id="receipt-fee">KES 350</span>
-                </div>
-                <div class="receipt-row total">
-                    <span>Total to Repay</span>
-                    <span id="receipt-total">KES 5,350</span>
-                </div>
-            </div>
-            <div class="receipt-actions">
-                <a href="dashboard.html" class="btn btn-primary">Go to Dashboard</a>
-            </div>
-        </div>
-    </div>
-
     <script src="scripts/api.js"></script>
     <script src="scripts/ui.js"></script>
     <script>
-        const FEE_STRUCTURE = {
-            3000: 200,
-            5000: 350,
-            6000: 460,
-            7000: 460,
-            8000: 460,
-            10000: 1000,
-            20000: 2000,
-            30000: 3000,
-            40000: 4000,
-            50000: 5000,
-            60000: 6000
-        };
-
-        function calculateFee(principal) {
-            if (FEE_STRUCTURE[principal]) {
-                return FEE_STRUCTURE[principal];
-            }
-            if (principal >= 6000 && principal <= 8000) {
-                return 460;
-            }
-            const amounts = Object.keys(FEE_STRUCTURE).map(Number).sort((a, b) => a - b);
-            for (let i = 0; i < amounts.length; i++) {
-                if (principal < amounts[i]) {
-                    return FEE_STRUCTURE[amounts[i > 0 ? i - 1 : 0]];
-                }
-            }
-            return FEE_STRUCTURE[60000];
-        }
-
-        let userLimit = 5000;
+        const loanAmountInput = document.getElementById('loan-amount');
+        const loanForm = document.getElementById('loan-form');
+        const loanPreview = document.getElementById('loan-preview');
+        const errorDiv = document.getElementById('form-error');
+        const successDiv = document.getElementById('form-success');
+        let userLoanLimit = 5000;
 
         document.addEventListener('DOMContentLoaded', async function() {
             if (!API.isAuthenticated()) {
@@ -156,78 +155,117 @@
                 return;
             }
 
+            // Load user loan limit
             try {
-                const data = await API.getLoanHistory();
-                userLimit = data.loan_limit;
-                document.getElementById('user-limit').textContent = `KES ${userLimit.toLocaleString()}`;
-                
-                const slider = document.getElementById('loan-slider');
-                slider.max = userLimit;
-                if (parseInt(slider.value) > userLimit) {
-                    slider.value = userLimit;
-                }
-                updatePreview();
+                const userData = await API.getLoanHistory();
+                userLoanLimit = userData.loan_limit;
+                document.getElementById('user-limit').textContent = `KES ${userLoanLimit.toLocaleString()}`;
+                document.getElementById('max-amount').textContent = `KES ${userLoanLimit.toLocaleString()}`;
+                loanAmountInput.max = userLoanLimit;
             } catch (error) {
                 console.error('Failed to load user data:', error);
             }
 
+            // Logout button
             document.getElementById('logout-btn').addEventListener('click', function() {
                 localStorage.removeItem('access_token');
                 localStorage.removeItem('refresh_token');
                 window.location.href = 'login.html';
             });
-        });
 
-        const slider = document.getElementById('loan-slider');
-        slider.addEventListener('input', updatePreview);
-
-        document.querySelectorAll('.preset-btn').forEach(btn => {
-            btn.addEventListener('click', function() {
-                const amount = parseInt(this.dataset.amount);
-                if (amount <= userLimit) {
-                    slider.value = amount;
-                    updatePreview();
-                } else {
-                    alert(`Amount exceeds your limit of KES ${userLimit.toLocaleString()}`);
+            // Loan amount input change - show preview
+            loanAmountInput.addEventListener('change', async function() {
+                const amount = parseInt(this.value);
+                if (amount >= 3000 && amount <= userLoanLimit) {
+                    await showLoanPreview(amount);
+                } else if (amount > userLoanLimit) {
+                    showError(`Amount exceeds your limit of KES ${userLoanLimit.toLocaleString()}`);
+                    loanPreview.style.display = 'none';
                 }
+            });
+
+            loanAmountInput.addEventListener('input', async function() {
+                const amount = parseInt(this.value);
+                if (!isNaN(amount) && amount >= 3000 && amount <= userLoanLimit) {
+                    await showLoanPreview(amount);
+                }
+            });
+
+            // Form submission
+            loanForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                const amount = parseInt(loanAmountInput.value);
+
+                if (!amount || amount < 3000 || amount > userLoanLimit) {
+                    showError('Invalid loan amount. Please check your input.');
+                    return;
+                }
+
+                await submitLoanApplication(amount);
             });
         });
 
-        function updatePreview() {
-            const principal = parseInt(slider.value);
-            const fee = calculateFee(principal);
-            const total = principal + fee;
-
-            document.getElementById('display-amount').textContent = `KES ${principal.toLocaleString()}`;
-            document.getElementById('preview-principal').textContent = `KES ${principal.toLocaleString()}`;
-            document.getElementById('preview-fee').textContent = `KES ${fee.toLocaleString()}`;
-            document.getElementById('preview-total').textContent = `KES ${total.toLocaleString()}`;
+        async function showLoanPreview(amount) {
+            try {
+                const preview = await API.getLoanPreview(amount);
+                
+                document.getElementById('preview-principal').textContent = `KES ${preview.principal.toLocaleString()}`;
+                document.getElementById('preview-fee').textContent = `KES ${preview.fee.toLocaleString()}`;
+                document.getElementById('preview-total').textContent = `KES ${preview.total_repayable.toLocaleString()}`;
+                document.getElementById('preview-duration').textContent = '30 Days';
+                
+                loanPreview.style.display = 'block';
+                hideError();
+            } catch (error) {
+                console.error('Failed to preview loan:', error);
+                loanPreview.style.display = 'none';
+            }
         }
 
-        document.getElementById('apply-btn').addEventListener('click', async function() {
-            const amount = parseInt(slider.value);
-            const errorDiv = document.getElementById('apply-error');
-            
-            if (amount > userLimit) {
-                errorDiv.textContent = `Amount exceeds your limit of KES ${userLimit.toLocaleString()}`;
-                errorDiv.style.display = 'block';
-                return;
-            }
-
+        async function submitLoanApplication(amount) {
             try {
-                const result = await API.applyLoan(amount);
+                // Show loading state
+                const submitBtn = loanForm.querySelector('button[type="submit"]');
+                const originalText = submitBtn.textContent;
+                submitBtn.disabled = true;
+                submitBtn.textContent = 'Processing...';
+
+                const loan = await API.applyLoan(amount);
+
+                // Show success message
+                showSuccess(`Loan approved! Loan ID: #${loan.id}`);
                 
-                document.getElementById('receipt-id').textContent = `#${result.id}`;
-                document.getElementById('receipt-principal').textContent = `KES ${result.amount.toLocaleString()}`;
-                document.getElementById('receipt-fee').textContent = `KES ${result.fee.toLocaleString()}`;
-                document.getElementById('receipt-total').textContent = `KES ${result.total.toLocaleString()}`;
-                
-                document.getElementById('receipt-modal').style.display = 'flex';
+                // Reset form
+                loanForm.reset();
+                loanPreview.style.display = 'none';
+
+                // Redirect to dashboard after 2 seconds
+                setTimeout(() => {
+                    window.location.href = `dashboard.html`;
+                }, 2000);
             } catch (error) {
-                errorDiv.textContent = error.message || 'Loan application failed. Please try again.';
-                errorDiv.style.display = 'block';
+                showError(error.message || 'Failed to apply for loan');
+                const submitBtn = loanForm.querySelector('button[type="submit"]');
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Apply for Loan';
             }
-        });
+        }
+
+        function showError(message) {
+            errorDiv.textContent = message;
+            errorDiv.style.display = 'block';
+            successDiv.style.display = 'none';
+        }
+
+        function hideError() {
+            errorDiv.style.display = 'none';
+        }
+
+        function showSuccess(message) {
+            successDiv.textContent = message;
+            successDiv.style.display = 'block';
+            errorDiv.style.display = 'none';
+        }
     </script>
 </body>
 </html>
